@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nathaniel Bapore - Photographer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="preload" as="image" href="works/Logo/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .sidebar {
+            width: 100vh;
+            height: max-content;
+            display: flex;
+            align-items: flex-start;
+            transform: rotate(-90deg) translate(-100%, 0);
+            transform-origin: left top;
+            padding: 1.5em 3em;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .sidebar-item {
+            flex: 2;
+        }
+
+        .sidebar-item:nth-child(2) {
+            display: flex;
+            gap: 6em;
+        }
+
+        p#header {
+            text-transform: uppercase;
+            font-size: 7.5rem;
+            line-height: 85%;
+            margin-bottom: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            color: #222;
+        }
+
+        .sidebar p {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .slider {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        .slider-wrapper {
+            position: absolute;
+            top: 0;
+            width: 8000px;
+            padding: 0 600px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 100px;
+        }
+
+        .slide {
+            width: 400px;
+            height: 500px;
+            background: #e3e3e3;
+            flex-shrink: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .menu {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.8rem;
+            color: #333;
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.02em;
+            z-index: 100;
+        }
+
+        .logo {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 100;
+            height: 98px;
+            transition: opacity 0.4s ease;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            display: block;
+        }
+
+        .menu::before {
+            content: '•';
+            margin-right: 0.4rem;
+        }
+
+        .menu-dropdown {
+            position: fixed;
+            top: 1.5rem;
+            right: 5rem;
+            display: flex;
+            gap: 0.8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 110;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+        }
+
+        .menu:hover+.menu-dropdown,
+        .menu-dropdown:hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-dropdown a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .menu-dropdown a:hover {
+            color: #999;
+        }
+
+        .menu-dropdown a.active {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+
+        .circle {
+            position: fixed;
+            bottom: 1.2rem;
+            right: 1.2rem;
+            width: 22px;
+            height: 22px;
+            z-index: 10;
+            transform: rotate(-90deg);
+        }
+
+        .circle svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #ddd;
+            stroke-width: 1.5;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: #333;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-dasharray: 56.55;
+            stroke-dashoffset: 56.55;
+            transition: stroke-dashoffset 0.1s ease;
+        }
+
+        .page-header {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.85rem;
+            color: #333;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .page-header.visible {
+            opacity: 1;
+        }
+
+        .grid-view {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            color: #AAA9A7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 10;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .grid-view.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .grid-view::before {
+            content: '::';
+            margin-right: 0.4rem;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .grid-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 28vh;
+            grid-auto-flow: dense;
+            width: 100vw;
+            gap: 0;
+        }
+
+        .grid-item {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background-color: #e4e4e4;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .span-2-rows {
+            grid-row: span 2;
+        }
+
+        .span-2-cols {
+            grid-column: span 2;
+        }
+
+        .close-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 110;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            mix-blend-mode: difference;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .grid-overlay.active~.close-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .close-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+                grid-auto-rows: 25vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 30vh;
+            }
+
+            .span-2-rows,
+            .span-2-cols {
+                grid-row: span 1;
+                grid-column: span 1;
+            }
+        }
+
+        .works-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .works-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .works-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            align-items: center;
+            padding: 0 4rem;
+            gap: 3rem;
+            scrollbar-width: none;
+        }
+
+        .works-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .work-item {
+            flex: 0 0 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .work-image {
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.05) contrast(0.95);
+            transition: transform 0.4s ease;
+        }
+
+        .work-item:hover .work-image img {
+            transform: scale(1.03);
+        }
+
+        .work-image .view-label {
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .work-item:hover .view-label {
+            opacity: 1;
+        }
+
+        .work-title {
+            font-size: 1rem;
+            color: #2a2a2a;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .work-subtitle {
+            font-size: 0.7rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            text-align: center;
+            margin-top: 0.3rem;
+            letter-spacing: 0.02em;
+        }
+
+        .works-close {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 60;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .works-overlay.active~.works-close {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .profile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            background: #fff;
+        }
+
+        .profile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-layout {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .profile-image {
+            width: 35%;
+            background-image: url('works/profile/98sensation.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-content {
+            width: 65%;
+            position: relative;
+            padding: 8% 8% 5% 12%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-hero {
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .profile-name-first-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-name-first {
+            font-family: 'Playfair Display', serif;
+            font-size: 5.5rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+
+        .profile-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            position: absolute;
+            bottom: 0.8rem;
+            right: -6.5rem;
+            color: #333;
+        }
+
+        .profile-name-last {
+            font-family: 'Playfair Display', serif;
+            font-size: 5.5rem;
+            line-height: 1;
+            margin: 0 0 0 1.5rem;
+            font-weight: 400;
+        }
+
+        .profile-bio {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #222;
+            max-width: 600px;
+            margin-top: 2rem;
+            margin-left: 32%;
+            margin-bottom: 3rem;
+        }
+
+        .profile-contact {
+            margin-top: auto;
+            margin-bottom: 6rem;
+        }
+
+        .profile-email {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #1a1a1a;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-social {
+            display: grid;
+            grid-template-columns: 70px auto;
+            row-gap: 0.2rem;
+            align-items: baseline;
+        }
+
+        .profile-social-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: #555;
+        }
+
+        .profile-social-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #1a1a1a;
+        }
+
+        .profile-footer {
+            position: absolute;
+            bottom: 2rem;
+            right: 2.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #333;
+        }
+
+        .profile-circular-wrapper {
+            position: absolute;
+            bottom: 6rem;
+            right: 2.5rem;
+            z-index: 5;
+        }
+
+        .profile-credit {
+            position: absolute;
+            bottom: 2rem;
+            left: 12%;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: #999;
+            letter-spacing: 0.02em;
+        }
+
+        .profile-credit a {
+            color: #999;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+            font-size: 14px;
+            background: linear-gradient(120deg, #999 0%, #999 35%, #fff 50%, #999 65%, #999 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .profile-credit a:hover {
+            color: #333;
+            background: linear-gradient(120deg, #555 0%, #555 35%, #fff 50%, #555 65%, #555 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 150% center; }
+            100% { background-position: -50% center; }
+        }
+
+        .circular-text {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            animation: spin var(--duration, 20s) linear infinite;
+            cursor: pointer;
+        }
+
+        .circular-text span {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-origin: 0 0;
+            font-size: 0.55rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-close {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 60;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .profile-overlay.active~.profile-close {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 1200px) {
+            .slide {
+                width: 300px;
+                height: 400px;
+            }
+
+            p#header {
+                font-size: 5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: none;
+                width: 100%;
+                padding: 6rem 1.5rem 2rem 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+                position: fixed;
+            }
+
+            .sidebar-item:nth-child(2) {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            p#header {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .sidebar p {
+                font-size: 0.75rem;
+            }
+
+            .slider-wrapper {
+                width: 100%;
+                padding: 0 2rem;
+                gap: 2rem;
+            }
+
+            .slide {
+                width: 80vw;
+                height: 60vh;
+                flex-shrink: 0;
+            }
+
+            .works-container {
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 6rem 1.5rem 4rem 1.5rem;
+                gap: 3rem;
+            }
+
+            .work-item {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+
+            .work-image {
+                height: 60vh;
+            }
+
+            .profile-overlay {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .profile-layout {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                position: relative;
+            }
+
+            .profile-content {
+                width: 100%;
+                padding: 6rem 1.5rem 3rem 1.5rem;
+                order: 1;
+                position: static;
+            }
+
+            .profile-image {
+                width: 100%;
+                height: 60vh;
+                order: 2;
+            }
+
+            .profile-name-first-wrapper {
+                display: block;
+            }
+
+            .profile-name-first {
+                font-size: 3.8rem;
+                display: block;
+            }
+
+            .profile-role {
+                position: static;
+                display: inline-block;
+                margin-left: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .profile-name-last {
+                font-size: 3.8rem;
+                margin-left: 2rem;
+            }
+
+            .profile-bio {
+                margin-left: 0;
+                margin-top: 2.5rem;
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+
+            .profile-contact {
+                margin-top: 2.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .profile-email {
+                font-size: 1.15rem;
+                word-break: break-all;
+            }
+
+            .profile-social-value {
+                font-size: 1rem;
+            }
+
+            .profile-footer {
+                position: absolute;
+                bottom: 2.5rem;
+                right: 1.5rem;
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                font-size: 0.7rem;
+                gap: 0.4rem;
+                z-index: 10;
+                mix-blend-mode: difference;
+                color: #fff;
+            }
+
+            .profile-circular-wrapper {
+                bottom: 6rem;
+                right: 1.5rem;
+            }
+
+            .profile-credit {
+                left: 1.5rem;
+                bottom: 6.5rem;
+            }
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            z-index: 210;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+        .project-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 70;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .project-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .project-header {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 75;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .project-overlay.active~.project-header {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #222;
+        }
+
+        .project-subtitle-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+
+        .project-gallery {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 4rem;
+            gap: 2rem;
+            scrollbar-width: none;
+        }
+
+        .project-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .project-gallery img {
+            height: 65vh;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .project-close {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.05em;
+            z-index: 75;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .project-overlay.active~.project-close {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 768px) {
+            .project-gallery {
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 6rem 1.5rem 4rem 1.5rem;
+                gap: 2rem;
+            }
+
+            .project-gallery img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo">
+        <img src="works/Logo/logo.png" alt="Nathaniel Bapore">
+    </div>
+    <div class="menu">menu</div>
+    <div class="menu-dropdown">
+        <a href="#" id="homeLink">home</a>
+        <a href="#" id="worksLink">works</a>
+        <a href="#" id="profileLink">profile</a>
+    </div>
+
+    <div class="page-header">Latest photos</div>
+
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <p id="header">Nathaniel<br />Bapore</p>
+            <p>Photographer</p>
+        </div>
+        <div class="sidebar-item">
+            <p>Scroll Experience</p>
+        </div>
+    </div>
+    <div class="slider" id="mainContainer">
+        <div class="slider-wrapper">
+            <div class="slide"><img src="works/home/img-1.jpg" alt="Photo 1"></div>
+            <div class="slide"><img src="works/home/img-2.jpg" alt="Photo 2"></div>
+            <div class="slide"><img src="works/home/img-3.jpg" alt="Photo 3"></div>
+            <div class="slide"><img src="works/home/img-4.jpg" alt="Photo 4"></div>
+            <div class="slide"><img src="works/home/img-5.jpg" alt="Photo 5"></div>
+            <div class="slide"><img src="works/home/img-6.jpg" alt="Photo 6"></div>
+            <div class="slide"><img src="works/home/img-7.jpg" alt="Photo 7"></div>
+            <div class="slide"><img src="works/home/img-8.jpg" alt="Photo 8"></div>
+            <div class="slide"><img src="works/home/img-9.jpg" alt="Photo 9"></div>
+            <div class="slide"><img src="works/home/img-10.jpg" alt="Photo 10"></div>
+            <div class="slide"><img src="works/home/img-11.jpg" alt="Photo 11"></div>
+            <div class="slide"><img src="works/home/img-12.jpg" alt="Photo 12"></div>
+            <div class="slide"><img src="works/home/img-13.jpg" alt="Photo 13"></div>
+            <div class="slide"><img src="works/home/img-14.jpg" alt="Photo 14"></div>
+            <div class="slide"><img src="works/home/img-15.jpg" alt="Photo 15"></div>
+            <div class="slide"><img src="works/home/img-16.jpg" alt="Photo 16"></div>
+            <div class="slide"><img src="works/home/img-17.jpg" alt="Photo 17"></div>
+            <div class="slide"><img src="works/home/img-18.jpg" alt="Photo 18"></div>
+            <div class="slide"><img src="works/home/img-19.jpg" alt="Photo 19"></div>
+            <div class="slide"><img src="works/home/img-20.jpg" alt="Photo 20"></div>
+            <div class="slide"><img src="works/home/img-21.jpg" alt="Photo 21"></div>
+            <div class="slide"><img src="works/home/img-22.jpg" alt="Photo 22"></div>
+            <div class="slide"><img src="works/home/img-23.jpg" alt="Photo 23"></div>
+            <div class="slide"><img src="works/home/img-24.jpg" alt="Photo 24"></div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">scroll</div>
+    <div class="grid-view">grid view</div>
+    <div class="circle">
+        <svg viewBox="0 0 22 22">
+            <circle class="circle-bg" cx="11" cy="11" r="9"></circle>
+            <circle class="circle-progress" cx="11" cy="11" r="9"></circle>
+        </svg>
+    </div>
+
+    <div class="grid-overlay" id="gridOverlay">
+        <main class="gallery-grid">
+            <div class="grid-item"><img src="works/home/img-1.jpg" alt="Photo 1"></div>
+            <div class="grid-item"><img src="works/home/img-2.jpg" alt="Photo 2"></div>
+            <div class="grid-item"><img src="works/home/img-3.jpg" alt="Photo 3"></div>
+            <div class="grid-item"><img src="works/home/img-4.jpg" alt="Photo 4"></div>
+            <div class="grid-item"><img src="works/home/img-5.jpg" alt="Photo 5"></div>
+            <div class="grid-item"><img src="works/home/img-6.jpg" alt="Photo 6"></div>
+            <div class="grid-item"><img src="works/home/img-7.jpg" alt="Photo 7"></div>
+            <div class="grid-item"><img src="works/home/img-8.jpg" alt="Photo 8"></div>
+            <div class="grid-item"><img src="works/home/img-9.jpg" alt="Photo 9"></div>
+            <div class="grid-item span-2-rows"><img src="works/home/img-10.jpg" alt="Photo 10"></div>
+            <div class="grid-item span-2-rows"><img src="works/home/img-11.jpg" alt="Photo 11"></div>
+            <div class="grid-item"><img src="works/home/img-12.jpg" alt="Photo 12"></div>
+            <div class="grid-item"><img src="works/home/img-13.jpg" alt="Photo 13"></div>
+            <div class="grid-item span-2-rows"><img src="works/home/img-14.jpg" alt="Photo 14"></div>
+            <div class="grid-item"><img src="works/home/img-15.jpg" alt="Photo 15"></div>
+            <div class="grid-item"><img src="works/home/img-16.jpg" alt="Photo 16"></div>
+            <div class="grid-item"><img src="works/home/img-17.jpg" alt="Photo 17"></div>
+            <div class="grid-item"><img src="works/home/img-18.jpg" alt="Photo 18"></div>
+            <div class="grid-item"><img src="works/home/img-19.jpg" alt="Photo 19"></div>
+            <div class="grid-item"><img src="works/home/img-20.jpg" alt="Photo 20"></div>
+            <div class="grid-item"><img src="works/home/img-21.jpg" alt="Photo 21"></div>
+            <div class="grid-item"><img src="works/home/img-22.jpg" alt="Photo 22"></div>
+            <div class="grid-item"><img src="works/home/img-23.jpg" alt="Photo 23"></div>
+            <div class="grid-item"><img src="works/home/img-24.jpg" alt="Photo 24"></div>
+        </main>
+    </div>
+    <button class="close-btn" id="closeBtn">
+        <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="4" x2="20" y2="20"></line>
+            <line x1="4" y1="20" x2="20" y2="4"></line>
+        </svg>
+        close
+    </button>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">
+            <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="4" x2="20" y2="20"></line>
+                <line x1="4" y1="20" x2="20" y2="4"></line>
+            </svg>
+        </button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <div class="works-overlay" id="worksOverlay">
+        <div class="works-container" id="worksGallery">
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/NIOVO '26/NIOVO (1).jpg" alt="NIOVO">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">NIOVO '26</div>
+                <div class="work-subtitle">collection</div>
+            </div>
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/Real Estate '25/Home (1).jpg" alt="Real Estate">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">Real Estate '25</div>
+                <div class="work-subtitle">editorial</div>
+            </div>
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/TARA-CYBER/CYBER (1).jpg" alt="TARA-CYBER">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">TARA-CYBER</div>
+                <div class="work-subtitle">fashion</div>
+            </div>
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/TARA-RED/RED (1).jpg" alt="TARA-RED">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">TARA-RED</div>
+                <div class="work-subtitle">fashion</div>
+            </div>
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/TARA-TEASE/TEASE (1).jpg" alt="TARA-TEASE">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">TARA-TEASE</div>
+                <div class="work-subtitle">fashion</div>
+            </div>
+            <div class="work-item">
+                <div class="work-image">
+                    <img src="works/XELENE 26/XELENE (1).jpg" alt="XELENE">
+                    <span class="view-label">view</span>
+                </div>
+                <div class="work-title">XELENE 26</div>
+                <div class="work-subtitle">collection</div>
+            </div>
+        </div>
+    </div>
+    <div class="works-close" id="worksClose">close</div>
+
+    <div class="profile-overlay" id="profileOverlay">
+        <div class="profile-layout">
+            <div class="profile-image"></div>
+            <div class="profile-content">
+                <div class="profile-typography">
+                    <h1 class="profile-hero">
+                        <div class="profile-name-first-wrapper">
+                            <span class="profile-name-first">Nathaniel</span>
+                            <span class="profile-role">(Photographer)</span>
+                        </div>
+                        <div class="profile-name-last">Bapore</div>
+                    </h1>
+                    <p class="profile-bio">
+                        I am Nathaniel Bapore—a visual artist and photographer specializing in fashion, portraiture,
+                        and creative direction.
+                        <br><br>
+                        My work is an exploration of concise visual storytelling, brought to life through intricate
+                        detail, evocative tones, and authentic emotion. From the initial concept to the final meticulous
+                        retouch, every frame is crafted with absolute intention.
+                        <br><br>
+                        I partner with visionaries, brands, and individuals to create enduring imagery that connects and
+                        elevates.
+                        <br><br>
+                        Based in Lagos. Available for global commissions.
+                    </p>
+                </div>
+                <div class="profile-contact">
+                    <a href="mailto:contact@aikawakenichi.com" class="profile-email">contact@aikawakenichi.com</a>
+                    <div class="profile-social">
+                        <span class="profile-social-label">Instagram</span>
+                        <span class="profile-social-value">aikawa_kenichi</span>
+                        <span class="profile-social-label">Facebook</span>
+                        <span class="profile-social-value">aikawa1977</span>
+                    </div>
+                </div>
+                <div class="profile-circular-wrapper">
+                    <div class="circular-text" id="circularText"></div>
+                </div>
+                <div class="profile-footer">
+                    Lagos, <span id="lagosTime"></span>
+                </div>
+                <div class="profile-credit">
+                    Designed &amp; Developed by <a href="https://ediyestudio.framer.website/#nav-start" target="_blank">eDiye Studio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-close" id="profileClose">close</div>
+
+    <div class="project-overlay" id="projectOverlay">
+        <div class="project-gallery" id="projectGallery"></div>
+    </div>
+    <div class="project-header" id="projectHeader">
+        <div class="project-title" id="projectTitle"></div>
+        <div class="project-subtitle-label" id="projectSubtitle"></div>
+    </div>
+    <div class="project-close" id="projectClose">close</div>
+
+    <script>
+        const slider = document.getElementById('mainContainer');
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        const slides = document.querySelectorAll('.slide');
+        const pageHeader = document.querySelector('.page-header');
+        const gridView = document.querySelector('.grid-view');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const circleProgress = document.querySelector('.circle-progress');
+        const circumference = 2 * Math.PI * 9;
+        const isMobile = () => window.innerWidth <= 768;
+
+        let target = 0;
+        let current = 0;
+        let ease = 0.075;
+        let maxScroll = 0;
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        function updateScaleAndPosition() {
+            slides.forEach(slide => {
+                const rect = slide.getBoundingClientRect();
+                const centerPosition = (rect.left + rect.right) / 2;
+                const distanceFromCenter = centerPosition - window.innerWidth / 2;
+
+                let scale, offsetX;
+                if (distanceFromCenter > 0) {
+                    scale = Math.min(1.75, 1 + distanceFromCenter / window.innerWidth);
+                    offsetX = (scale - 1) * 300;
+                } else {
+                    scale = Math.max(0.5, 1 - Math.abs(distanceFromCenter) / window.innerWidth);
+                    offsetX = 0;
+                }
+
+                gsap.set(slide, { scale: scale, x: offsetX });
+            });
+        }
+
+        function updateProgress() {
+            const scrollProgress = current / maxScroll || 0;
+            const offset = circumference - (scrollProgress * circumference);
+            circleProgress.style.strokeDashoffset = offset;
+
+            if (current < 200) {
+                pageHeader.classList.remove('visible');
+                gridView.classList.remove('visible');
+                scrollIndicator.style.opacity = '1';
+            } else {
+                pageHeader.classList.add('visible');
+                gridView.classList.add('visible');
+                scrollIndicator.style.opacity = '0';
+            }
+        }
+
+        function update() {
+            current = lerp(current, target, ease);
+
+            gsap.set('.slider-wrapper', { x: -current });
+
+            updateScaleAndPosition();
+            updateProgress();
+
+            requestAnimationFrame(update);
+        }
+
+        window.addEventListener('resize', () => {
+            maxScroll = sliderWrapper.offsetWidth - window.innerWidth;
+        });
+
+        maxScroll = sliderWrapper.offsetWidth - window.innerWidth;
+
+        let isWorksActive = false;
+        let isProjectActive = false;
+
+        window.addEventListener('wheel', (e) => {
+            if (isMobile()) return;
+            e.preventDefault();
+            if (isProjectActive) {
+                projectGallery.scrollLeft += e.deltaY;
+            } else if (isWorksActive) {
+                worksGallery.scrollLeft += e.deltaY;
+            } else if (!gridOverlay.classList.contains('active')) {
+                target += e.deltaY;
+                target = Math.max(0, target);
+                target = Math.min(maxScroll, target);
+            }
+        }, { passive: false });
+
+        update();
+
+        const gridViewBtn = document.querySelector('.grid-view');
+        const gridOverlay = document.getElementById('gridOverlay');
+        const closeBtn = document.getElementById('closeBtn');
+
+        gridViewBtn.addEventListener('click', () => {
+            gridOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            gridOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        const worksOverlay = document.getElementById('worksOverlay');
+        const worksGallery = document.getElementById('worksGallery');
+        const worksLink = document.getElementById('worksLink');
+        const homeLink = document.getElementById('homeLink');
+        const worksClose = document.getElementById('worksClose');
+        const mainContainer = document.getElementById('mainContainer');
+        const profileOverlay = document.getElementById('profileOverlay');
+        const profileLink = document.getElementById('profileLink');
+        const profileClose = document.getElementById('profileClose');
+
+        function closeAllOverlays() {
+            worksOverlay.classList.remove('active');
+            profileOverlay.classList.remove('active');
+            projectOverlay.classList.remove('active');
+            isProjectActive = false;
+            isWorksActive = false;
+            mainContainer.style.opacity = '1';
+            mainContainer.style.pointerEvents = 'auto';
+            target = 0;
+            updateProgress();
+            setActiveLink(homeLink);
+        }
+
+        function setActiveLink(active) {
+            document.querySelectorAll('.menu-dropdown a').forEach(el => el.classList.remove('active'));
+            active.classList.add('active');
+        }
+
+        worksLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            profileOverlay.classList.remove('active');
+            projectOverlay.classList.remove('active');
+            isProjectActive = false;
+            worksOverlay.classList.add('active');
+            mainContainer.style.opacity = '0';
+            mainContainer.style.pointerEvents = 'none';
+            pageHeader.style.opacity = '0';
+            gridView.style.opacity = '0';
+            scrollIndicator.style.opacity = '0';
+            isWorksActive = true;
+            setActiveLink(worksLink);
+        });
+
+        profileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            worksOverlay.classList.remove('active');
+            projectOverlay.classList.remove('active');
+            isProjectActive = false;
+            profileOverlay.classList.add('active');
+            mainContainer.style.opacity = '0';
+            mainContainer.style.pointerEvents = 'none';
+            pageHeader.style.opacity = '0';
+            gridView.style.opacity = '0';
+            scrollIndicator.style.opacity = '0';
+            setActiveLink(profileLink);
+        });
+
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeAllOverlays();
+            setActiveLink(homeLink);
+        });
+
+        worksClose.addEventListener('click', closeAllOverlays);
+        profileClose.addEventListener('click', closeAllOverlays);
+
+        setActiveLink(homeLink);
+
+        function updateLagosTime() {
+            const now = new Date();
+            const lagos = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+            document.getElementById('lagosTime').textContent = lagos.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+        updateLagosTime();
+        setInterval(updateLagosTime, 1000);
+
+        let isWorksDown = false;
+        let worksStartX;
+        let worksScrollLeft;
+
+        worksGallery.addEventListener('mousedown', (e) => {
+            if (isMobile()) return;
+            isWorksDown = true;
+            worksGallery.style.cursor = 'grabbing';
+            worksStartX = e.pageX - worksGallery.offsetLeft;
+            worksScrollLeft = worksGallery.scrollLeft;
+        });
+
+        worksGallery.addEventListener('mouseleave', () => {
+            isWorksDown = false;
+            worksGallery.style.cursor = 'grab';
+        });
+
+        worksGallery.addEventListener('mouseup', () => {
+            isWorksDown = false;
+            worksGallery.style.cursor = 'grab';
+        });
+
+        worksGallery.addEventListener('mousemove', (e) => {
+            if (!isWorksDown) return;
+            e.preventDefault();
+            const x = e.pageX - worksGallery.offsetLeft;
+            const walk = (x - worksStartX) * 1.5;
+            worksGallery.scrollLeft = worksScrollLeft - walk;
+        });
+
+        worksGallery.style.cursor = 'grab';
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.slide img, .grid-item img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxImg.src = '';
+        }
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (lightbox.classList.contains('active')) closeLightbox();
+                else if (projectOverlay.classList.contains('active')) closeProject();
+            }
+        });
+
+        const projectOverlay = document.getElementById('projectOverlay');
+        const projectGallery = document.getElementById('projectGallery');
+        const projectTitle = document.getElementById('projectTitle');
+        const projectSubtitle = document.getElementById('projectSubtitle');
+        const projectClose = document.getElementById('projectClose');
+
+        const projectData = [
+            { folder: "NIOVO '26", title: "NIOVO '26", subtitle: "collection", prefix: "NIOVO (", suffix: ").jpg", imgCount: 34 },
+            { folder: "Real Estate '25", title: "Real Estate '25", subtitle: "editorial", prefix: "Home  (", suffix: ").jpg", imgCount: 29 },
+            { folder: "TARA-CYBER", title: "TARA-CYBER", subtitle: "fashion", prefix: "CYBER (", suffix: ").jpg", imgCount: 9 },
+            { folder: "TARA-RED", title: "TARA-RED", subtitle: "fashion", prefix: "RED (", suffix: ").jpg", imgCount: 10 },
+            { folder: "TARA-TEASE", title: "TARA-TEASE", subtitle: "fashion", prefix: "TEASE (", suffix: ").jpg", imgCount: 12 },
+            { folder: "XELENE 26", title: "XELENE 26", subtitle: "collection", prefix: "XELENE (", suffix: ").jpg", imgCount: 51 }
+        ];
+
+        document.querySelectorAll('.work-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const data = projectData[index];
+                if (!data) return;
+                projectTitle.textContent = data.title;
+                projectSubtitle.textContent = data.subtitle;
+                projectGallery.innerHTML = '';
+                if (data.files) {
+                    data.files.forEach(f => {
+                        const imgEl = document.createElement('img');
+                        imgEl.src = `works/${data.folder}/${f}`;
+                        imgEl.alt = `${data.title}`;
+                        imgEl.draggable = false;
+                        projectGallery.appendChild(imgEl);
+                    });
+                } else {
+                    for (let i = 1; i <= data.imgCount; i++) {
+                        const imgEl = document.createElement('img');
+                        imgEl.src = `works/${data.folder}/${data.prefix}${i}${data.suffix}`;
+                        imgEl.alt = `${data.title} ${i}`;
+                        imgEl.draggable = false;
+                        projectGallery.appendChild(imgEl);
+                    }
+                }
+                projectOverlay.classList.add('active');
+                isProjectActive = true;
+                projectGallery.scrollLeft = 0;
+            });
+        });
+
+        function closeProject() {
+            projectOverlay.classList.remove('active');
+            isProjectActive = false;
+            projectGallery.innerHTML = '';
+        }
+
+        projectClose.addEventListener('click', closeProject);
+
+        let isProjectDown = false;
+        let projectStartX;
+        let projectScrollLeft;
+
+        projectGallery.addEventListener('mousedown', (e) => {
+            if (isMobile()) return;
+            isProjectDown = true;
+            projectGallery.style.cursor = 'grabbing';
+            projectStartX = e.pageX - projectGallery.offsetLeft;
+            projectScrollLeft = projectGallery.scrollLeft;
+        });
+
+        projectGallery.addEventListener('mouseleave', () => {
+            isProjectDown = false;
+            projectGallery.style.cursor = 'grab';
+        });
+
+        projectGallery.addEventListener('mouseup', () => {
+            isProjectDown = false;
+            projectGallery.style.cursor = 'grab';
+        });
+
+        projectGallery.addEventListener('mousemove', (e) => {
+            if (!isProjectDown) return;
+            e.preventDefault();
+            const x = e.pageX - projectGallery.offsetLeft;
+            const walk = (x - projectStartX) * 1.5;
+            projectGallery.scrollLeft = projectScrollLeft - walk;
+        });
+
+        projectGallery.style.cursor = 'grab';
+
+        const circularText = document.getElementById('circularText');
+        const ctText = 'NATHANIEL BAPORE • ';
+        const ctRadius = 35;
+        const ctLetters = Array.from(ctText);
+        const ctDuration = 12;
+
+        circularText.style.setProperty('--duration', ctDuration + 's');
+
+        ctLetters.forEach((letter) => {
+            const span = document.createElement('span');
+            span.textContent = letter === ' ' ? '\u00A0' : letter;
+            circularText.appendChild(span);
+        });
+
+        function positionCircularText() {
+            const spans = circularText.querySelectorAll('span');
+            const angleStep = 360 / spans.length;
+            spans.forEach((span, i) => {
+                const angle = angleStep * i;
+                span.style.transform = `rotate(${angle}deg) translateY(-${ctRadius}px)`;
+            });
+        }
+        positionCircularText();
+
+        let ctBaseDuration = ctDuration;
+
+        circularText.addEventListener('mouseenter', () => {
+            circularText.style.setProperty('--duration', (ctBaseDuration / 4) + 's');
+        });
+
+        circularText.addEventListener('mouseleave', () => {
+            circularText.style.setProperty('--duration', ctBaseDuration + 's');
+        });
+    </script>
+</body>
+
+</html>
