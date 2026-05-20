@@ -513,6 +513,11 @@
             background-image: url('works/profile/98sensation.jpg');
             background-size: cover;
             background-position: center;
+            position: relative;
+        }
+
+        .profile-logo {
+            display: none;
         }
 
         .profile-content {
@@ -803,6 +808,16 @@
                 width: 100%;
                 height: 60vh;
                 order: 2;
+                position: relative;
+            }
+
+            .profile-logo {
+                display: block;
+                position: absolute;
+                top: 1.5rem;
+                left: 1.5rem;
+                height: 48px;
+                z-index: 5;
             }
 
             .profile-name-first-wrapper {
@@ -1182,7 +1197,9 @@
 
     <div class="profile-overlay" id="profileOverlay">
         <div class="profile-layout">
-            <div class="profile-image"></div>
+            <div class="profile-image">
+                <img class="profile-logo" src="works/Logo/logo.png" alt="Nathaniel Bapore">
+            </div>
             <div class="profile-content">
                 <div class="profile-typography">
                     <h1 class="profile-hero">
@@ -1388,6 +1405,9 @@
             isWorksActive = false;
             mainContainer.style.opacity = '1';
             mainContainer.style.pointerEvents = 'auto';
+            if (window.innerWidth <= 768) {
+                document.querySelector('.logo').style.opacity = '1';
+            }
             target = 0;
             updateProgress();
             setActiveLink(homeLink);
@@ -1424,6 +1444,9 @@
             pageHeader.style.opacity = '0';
             gridView.style.opacity = '0';
             scrollIndicator.style.opacity = '0';
+            if (window.innerWidth <= 768) {
+                document.querySelector('.logo').style.opacity = '0';
+            }
             setActiveLink(profileLink);
         });
 
