@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
         rel="stylesheet">
-    <link rel="preload" as="image" href="works/Logo/logo.png">
+    <link rel="preload" as="image" href="works/Logo/logo-black.png">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
     <style>
         * {
@@ -50,6 +50,10 @@
         .sidebar-item:nth-child(2) {
             display: flex;
             gap: 6em;
+        }
+
+        .sidebar-item:nth-child(2) p {
+            opacity: 0 !important;
         }
 
         p#header {
@@ -180,6 +184,7 @@
             letter-spacing: 0.05em;
             z-index: 10;
             transition: opacity 0.3s ease;
+            opacity: 0 !important;
         }
 
         .circle {
@@ -221,28 +226,46 @@
             color: #333;
             font-family: 'Georgia', 'Times New Roman', serif;
             z-index: 10;
-            opacity: 0;
+            opacity: 0 !important;
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
 
         .page-header.visible {
-            opacity: 1;
+            opacity: 0 !important;
         }
 
         .grid-view {
             position: fixed;
             bottom: 1.5rem;
             left: 1.5rem;
-            font-size: 0.7rem;
-            color: #AAA9A7;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.05em;
             z-index: 10;
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #555;
+            border-radius: 20px;
+            background: rgba(30, 30, 30, 0.85);
+            font-size: 0.8rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        .grid-view svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
         }
 
         .grid-view.visible {
@@ -250,9 +273,13 @@
             pointer-events: auto;
         }
 
-        .grid-view::before {
-            content: '::';
-            margin-right: 0.4rem;
+        .grid-view span {
+            background: linear-gradient(120deg, #999 0%, #999 35%, #fff 50%, #999 65%, #999 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         .grid-overlay {
@@ -267,7 +294,6 @@
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
             overflow-y: auto;
-            overflow-x: hidden;
         }
 
         .grid-overlay.active {
@@ -384,6 +410,20 @@
             visibility: visible;
         }
 
+        .works-logo {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 60;
+            height: 98px;
+        }
+
+        .works-logo img {
+            height: 100%;
+            width: auto;
+            display: block;
+        }
+
         .works-container {
             display: flex;
             width: 100%;
@@ -468,15 +508,42 @@
             position: fixed;
             bottom: 1.5rem;
             left: 1.5rem;
-            font-size: 0.7rem;
-            color: #999;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.05em;
             z-index: 60;
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #555;
+            border-radius: 20px;
+            background: rgba(30, 30, 30, 0.85);
+            font-size: 0.8rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        .works-close svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .works-close span {
+            background: linear-gradient(120deg, #999 0%, #999 35%, #fff 50%, #999 65%, #999 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         .works-overlay.active~.works-close {
@@ -517,7 +584,12 @@
         }
 
         .profile-logo {
-            display: none;
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            height: 98px;
+            width: auto;
+            z-index: 5;
         }
 
         .profile-content {
@@ -693,15 +765,42 @@
             position: fixed;
             bottom: 1.5rem;
             left: 1.5rem;
-            font-size: 0.7rem;
-            color: #999;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.05em;
             z-index: 60;
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #555;
+            border-radius: 20px;
+            background: rgba(30, 30, 30, 0.85);
+            font-size: 0.8rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        .profile-close svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .profile-close span {
+            background: linear-gradient(120deg, #999 0%, #999 35%, #fff 50%, #999 65%, #999 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         .profile-overlay.active~.profile-close {
@@ -948,14 +1047,30 @@
             visibility: visible;
         }
 
-        .project-header {
+        .project-logo {
             position: fixed;
             top: 1.5rem;
             left: 1.5rem;
+            z-index: 80;
+            height: 98px;
+        }
+
+        .project-logo img {
+            height: 100%;
+            width: auto;
+            display: block;
+        }
+
+        .project-header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 75;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            text-align: center;
         }
 
         .project-overlay.active~.project-header {
@@ -1002,15 +1117,42 @@
             position: fixed;
             bottom: 1.5rem;
             left: 1.5rem;
-            font-size: 0.7rem;
-            color: #999;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.05em;
             z-index: 75;
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #555;
+            border-radius: 20px;
+            background: rgba(30, 30, 30, 0.85);
+            font-size: 0.8rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        .project-close svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .project-close span {
+            background: linear-gradient(120deg, #999 0%, #999 35%, #fff 50%, #999 65%, #999 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         .project-overlay.active~.project-close {
@@ -1037,7 +1179,7 @@
 
 <body>
     <div class="logo">
-        <img src="works/Logo/logo.png" alt="Nathaniel Bapore">
+        <img src="works/Logo/logo-black.png" alt="Nathaniel Bapore">
     </div>
     <div class="menu">menu</div>
     <div class="menu-dropdown">
@@ -1087,7 +1229,7 @@
     </div>
 
     <div class="scroll-indicator">scroll</div>
-    <div class="grid-view">grid view</div>
+    <div class="grid-view"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>grid view</span></div>
     <div class="circle">
         <svg viewBox="0 0 22 22">
             <circle class="circle-bg" cx="11" cy="11" r="9"></circle>
@@ -1142,6 +1284,7 @@
     </div>
 
     <div class="works-overlay" id="worksOverlay">
+        <div class="works-logo"><img src="works/Logo/logo-black.png" alt="Nathaniel Bapore"></div>
         <div class="works-container" id="worksGallery">
             <div class="work-item">
                 <div class="work-image">
@@ -1193,7 +1336,7 @@
             </div>
         </div>
     </div>
-    <div class="works-close" id="worksClose">close</div>
+    <div class="works-close" id="worksClose"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>close</span></div>
 
     <div class="profile-overlay" id="profileOverlay">
         <div class="profile-layout">
@@ -1244,16 +1387,17 @@
             </div>
         </div>
     </div>
-    <div class="profile-close" id="profileClose">close</div>
+    <div class="profile-close" id="profileClose"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>close</span></div>
 
     <div class="project-overlay" id="projectOverlay">
+        <div class="project-logo"><img src="works/Logo/logo-black.png" alt="Nathaniel Bapore"></div>
         <div class="project-gallery" id="projectGallery"></div>
     </div>
     <div class="project-header" id="projectHeader">
         <div class="project-title" id="projectTitle"></div>
         <div class="project-subtitle-label" id="projectSubtitle"></div>
     </div>
-    <div class="project-close" id="projectClose">close</div>
+    <div class="project-close" id="projectClose"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>close</span></div>
 
     <script>
         const slider = document.getElementById('mainContainer');
@@ -1300,13 +1444,9 @@
             circleProgress.style.strokeDashoffset = offset;
 
             if (current < 200) {
-                pageHeader.classList.remove('visible');
                 gridView.classList.remove('visible');
-                scrollIndicator.style.opacity = '1';
             } else {
-                pageHeader.classList.add('visible');
                 gridView.classList.add('visible');
-                scrollIndicator.style.opacity = '0';
             }
         }
 
@@ -1354,6 +1494,7 @@
 
         window.addEventListener('wheel', (e) => {
             if (isMobile()) return;
+            if (gridOverlay.classList.contains('active')) return;
             e.preventDefault();
             if (isProjectActive) {
                 projectTarget += e.deltaY;
@@ -1361,7 +1502,7 @@
             } else if (isWorksActive) {
                 worksTarget += e.deltaY;
                 worksTarget = Math.max(0, worksTarget);
-            } else if (!gridOverlay.classList.contains('active')) {
+            } else {
                 target += e.deltaY;
                 target = Math.max(0, target);
                 target = Math.min(maxScroll, target);
@@ -1385,8 +1526,6 @@
             target = Math.min(maxScroll, target);
         });
 
-        update();
-
         document.querySelector('.menu').addEventListener('click', () => {
             document.querySelector('.menu-dropdown').classList.toggle('open');
         });
@@ -1400,6 +1539,8 @@
         const gridViewBtn = document.querySelector('.grid-view');
         const gridOverlay = document.getElementById('gridOverlay');
         const closeBtn = document.getElementById('closeBtn');
+
+        update();
 
         gridViewBtn.addEventListener('click', () => {
             gridOverlay.classList.add('active');
@@ -1429,9 +1570,7 @@
             isWorksActive = false;
             mainContainer.style.opacity = '1';
             mainContainer.style.pointerEvents = 'auto';
-            if (window.innerWidth <= 768) {
-                document.querySelector('.logo').style.opacity = '1';
-            }
+            document.querySelector('.logo').style.opacity = '1';
             target = 0;
             worksTarget = 0;
             worksCurrent = 0;
@@ -1454,6 +1593,7 @@
             worksOverlay.classList.add('active');
             mainContainer.style.opacity = '0';
             mainContainer.style.pointerEvents = 'none';
+            document.querySelector('.logo').style.opacity = '0';
             pageHeader.style.opacity = '0';
             gridView.style.opacity = '0';
             scrollIndicator.style.opacity = '0';
@@ -1473,9 +1613,7 @@
             pageHeader.style.opacity = '0';
             gridView.style.opacity = '0';
             scrollIndicator.style.opacity = '0';
-            if (window.innerWidth <= 768) {
-                document.querySelector('.logo').style.opacity = '0';
-            }
+            document.querySelector('.logo').style.opacity = '0';
             setActiveLink(profileLink);
         });
 
