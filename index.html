@@ -828,39 +828,44 @@
         }
 
         @media (max-width: 768px) {
+            .logo {
+                display: none;
+            }
+
             .sidebar {
                 position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                padding: 4.5rem 1.5rem 0.5rem 1.5rem;
+                top: 1.5rem;
+                left: 1.5rem;
+                width: auto;
+                padding: 0;
                 flex-direction: column;
-                gap: 0.3rem;
-                background: #fff;
-                z-index: 5;
+                gap: 0.1rem;
+                background: transparent;
+                z-index: 100;
                 height: auto;
                 transform: none;
                 pointer-events: none;
             }
 
             .sidebar-item:nth-child(2) {
-                flex-direction: row;
-                gap: 1rem;
+                display: none;
             }
 
             p#header {
-                font-size: 2rem;
-                margin-bottom: 0.3rem;
+                font-size: 1rem;
+                margin-bottom: 0;
+                text-transform: none;
+                line-height: 1.2;
             }
 
             .sidebar p {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
 
              .slider {
                 position: fixed;
-                top: 130px;
-                height: calc(100vh - 130px);
+                top: 0;
+                height: 100vh;
             }
 
             .slider-wrapper {
