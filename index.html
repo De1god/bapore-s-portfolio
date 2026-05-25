@@ -852,7 +852,7 @@
             }
 
             p#header {
-                font-size: 1rem;
+                font-size: 2rem;
                 margin-bottom: 0;
                 text-transform: none;
                 line-height: 1.2;
@@ -878,6 +878,10 @@
             .slide {
                 width: 65vw;
                 height: 45vh;
+            }
+
+            .works-logo {
+                display: none;
             }
 
             .works-container {
@@ -992,9 +996,14 @@
                 right: 1.5rem;
             }
 
+            .circular-text {
+                color: #fff;
+                mix-blend-mode: difference;
+            }
+
             .profile-credit {
                 left: 1.5rem;
-                bottom: 6.5rem;
+                bottom: 2.5rem;
             }
         }
 
@@ -1584,6 +1593,7 @@
             mainContainer.style.opacity = '1';
             mainContainer.style.pointerEvents = 'auto';
             document.querySelector('.logo').style.opacity = '1';
+            if (isMobile()) document.querySelector('.sidebar').style.opacity = '1';
             target = 0;
             worksTarget = 0;
             worksCurrent = 0;
@@ -1607,6 +1617,7 @@
             mainContainer.style.opacity = '0';
             mainContainer.style.pointerEvents = 'none';
             document.querySelector('.logo').style.opacity = '0';
+            if (isMobile()) document.querySelector('.sidebar').style.opacity = '0';
             pageHeader.style.opacity = '0';
             gridView.style.opacity = '0';
             scrollIndicator.style.opacity = '0';
@@ -1627,6 +1638,7 @@
             gridView.style.opacity = '0';
             scrollIndicator.style.opacity = '0';
             document.querySelector('.logo').style.opacity = '0';
+            if (isMobile()) document.querySelector('.sidebar').style.opacity = '0';
             setActiveLink(profileLink);
         });
 
