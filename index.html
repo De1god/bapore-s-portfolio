@@ -833,6 +833,18 @@
                 display: none;
             }
 
+            .staggered-menu-panel {
+                width: 80vw;
+                right: 0;
+                left: auto;
+            }
+
+            .sm-prelayers {
+                width: 80vw;
+                right: 0;
+                left: auto;
+            }
+
             .sidebar {
                 position: fixed;
                 top: 1.5rem;
@@ -1197,6 +1209,429 @@
                 height: auto;
             }
         }
+
+        .menu, .menu-dropdown {
+            display: none;
+        }
+
+        .staggered-menu-wrapper {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 200;
+            overflow: hidden;
+            pointer-events: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .staggered-menu-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1.5rem 1.5rem;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .staggered-menu-header > * {
+            pointer-events: auto;
+        }
+
+        .sm-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #333;
+            font-weight: 500;
+            line-height: 1;
+            font-size: 0.85rem;
+            font-family: inherit;
+            letter-spacing: 0.02em;
+            padding: 0;
+            text-transform: lowercase;
+        }
+
+        .sm-toggle-textWrap {
+            position: relative;
+            display: inline-block;
+            height: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .sm-toggle-textInner {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .sm-toggle-line {
+            display: block;
+            height: 1em;
+            line-height: 1;
+        }
+
+        .sm-icon {
+            position: relative;
+            width: 12px;
+            height: 12px;
+            flex: 0 0 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sm-icon-line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 100%;
+            height: 1.5px;
+            background: currentColor;
+            border-radius: 1px;
+            transform: translate(-50%, -50%);
+        }
+
+        .sm-icon-line-v {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        .sm-prelayers {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: clamp(260px, 38vw, 420px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .sm-prelayer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .staggered-menu-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: clamp(260px, 38vw, 420px);
+            height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 6em 2em 2em 2em;
+            overflow-y: auto;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .sm-panel-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .sm-panel-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sm-panel-itemWrap {
+            position: relative;
+            overflow: hidden;
+            line-height: 1;
+        }
+
+        .sm-panel-item {
+            position: relative;
+            color: #000;
+            font-weight: 600;
+            font-size: 3rem;
+            cursor: pointer;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            display: inline-block;
+            text-decoration: none;
+            transition: color 0.25s;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sm-panel-item:hover {
+            color: #5227FF;
+        }
+
+        .sm-panel-itemLabel {
+            display: inline-block;
+        }
+
+        .sm-socials {
+            margin-top: auto;
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sm-socials-title {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #5227FF;
+            font-family: inherit;
+        }
+
+        .sm-socials-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sm-socials-list:hover .sm-socials-link:not(:hover) {
+            opacity: 0.35;
+        }
+
+        .sm-socials-link {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #111;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .sm-socials-link:hover {
+            color: #5227FF;
+        }
+
+        @media (max-width: 768px) {
+            .menu, .menu-dropdown {
+                display: none;
+            }
+
+        .staggered-menu-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1.5rem 1.5rem;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .staggered-menu-header > * {
+            pointer-events: auto;
+        }
+
+        .sm-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #333;
+            font-weight: 500;
+            line-height: 1;
+            font-size: 0.8rem;
+            font-family: inherit;
+            letter-spacing: 0.02em;
+            padding: 0;
+        }
+
+        .sm-toggle-textWrap {
+            position: relative;
+            display: inline-block;
+            height: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .sm-toggle-textInner {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .sm-toggle-line {
+            display: block;
+            height: 1em;
+            line-height: 1;
+        }
+
+        .sm-icon {
+            position: relative;
+            width: 12px;
+            height: 12px;
+            flex: 0 0 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sm-icon-line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 100%;
+            height: 1.5px;
+            background: currentColor;
+            border-radius: 1px;
+            transform: translate(-50%, -50%);
+        }
+
+        .sm-icon-line-v {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        .sm-prelayers {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: clamp(260px, 38vw, 420px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .sm-prelayer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .staggered-menu-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: clamp(260px, 38vw, 420px);
+            height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 6em 2em 2em 2em;
+            overflow-y: auto;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .sm-panel-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .sm-panel-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sm-panel-itemWrap {
+            position: relative;
+            overflow: hidden;
+            line-height: 1;
+        }
+
+        .sm-panel-item {
+            position: relative;
+            color: #000;
+            font-weight: 600;
+            font-size: 3rem;
+            cursor: pointer;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            display: inline-block;
+            text-decoration: none;
+            transition: color 0.25s;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sm-panel-item:hover {
+            color: #5227FF;
+        }
+
+        .sm-panel-itemLabel {
+            display: inline-block;
+        }
+
+        .sm-socials {
+            margin-top: auto;
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sm-socials-title {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #5227FF;
+            font-family: inherit;
+        }
+
+        .sm-socials-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sm-socials-list:hover .sm-socials-link:not(:hover) {
+            opacity: 0.35;
+        }
+
+        .sm-socials-link {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #111;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .sm-socials-link:hover {
+            color: #5227FF;
+        }
     </style>
 </head>
 
@@ -1209,6 +1644,43 @@
         <a href="#" id="homeLink">home</a>
         <a href="#" id="worksLink">works</a>
         <a href="#" id="profileLink">profile</a>
+    </div>
+
+    <div class="staggered-menu-wrapper fixed-wrapper" id="smWrapper" data-position="right">
+        <div class="sm-prelayers">
+            <div class="sm-prelayer" style="background:#B497CF"></div>
+            <div class="sm-prelayer" style="background:#5227FF"></div>
+        </div>
+        <header class="staggered-menu-header">
+            <button class="sm-toggle" id="smToggle">
+                <span class="sm-toggle-textWrap">
+                    <span class="sm-toggle-textInner">
+                        <span class="sm-toggle-line">menu</span>
+                        <span class="sm-toggle-line">close</span>
+                    </span>
+                </span>
+                <span class="sm-icon">
+                    <span class="sm-icon-line"></span>
+                    <span class="sm-icon-line sm-icon-line-v"></span>
+                </span>
+            </button>
+        </header>
+        <aside class="staggered-menu-panel" id="smPanel">
+            <div class="sm-panel-inner">
+                <ul class="sm-panel-list">
+                    <li class="sm-panel-itemWrap"><a class="sm-panel-item" href="#" data-section="home"><span class="sm-panel-itemLabel">home</span></a></li>
+                    <li class="sm-panel-itemWrap"><a class="sm-panel-item" href="#" data-section="works"><span class="sm-panel-itemLabel">works</span></a></li>
+                    <li class="sm-panel-itemWrap"><a class="sm-panel-item" href="#" data-section="profile"><span class="sm-panel-itemLabel">profile</span></a></li>
+                </ul>
+                <div class="sm-socials">
+                    <h3 class="sm-socials-title">Socials</h3>
+                    <ul class="sm-socials-list">
+                        <li><a href="https://www.instagram.com/98sensation?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="sm-socials-link">Instagram</a></li>
+                        <li><a href="#" class="sm-socials-link">Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
     </div>
 
     <div class="page-header">Latest photos</div>
@@ -1547,6 +2019,83 @@
             target = touchStartTarget + dx;
             target = Math.max(0, target);
             target = Math.min(maxScroll, target);
+        });
+
+        // Staggered Menu
+        const smToggle = document.getElementById('smToggle');
+        const smPanel = document.getElementById('smPanel');
+        const smPrelayers = document.querySelectorAll('.sm-prelayer');
+        const smTextInner = smToggle.querySelector('.sm-toggle-textInner');
+        const smIcon = smToggle.querySelector('.sm-icon');
+        let smOpen = false;
+
+        smToggle.addEventListener('click', () => {
+            if (smOpen) closeSM(); else openSM();
+        });
+
+        function openSM() {
+            smOpen = true;
+            const links = smPanel.querySelectorAll('.sm-panel-item');
+            const socials = smPanel.querySelector('.sm-socials');
+            const socialLinks = smPanel.querySelectorAll('.sm-socials-link');
+
+            gsap.set(smPrelayers, { opacity: 0, xPercent: 100 });
+            gsap.set(smPanel, { opacity: 0, xPercent: 100 });
+            gsap.set(links, { yPercent: 120, rotate: 10 });
+            gsap.set(socials, { opacity: 0 });
+            gsap.set(socialLinks, { y: 20, opacity: 0 });
+            gsap.set(smTextInner, { yPercent: 0 });
+
+            const tl = gsap.timeline();
+            smPrelayers.forEach((el, i) => {
+                tl.to(el, { opacity: 1, xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07);
+            });
+            const lastTime = (smPrelayers.length - 1) * 0.07;
+            tl.to(smPanel, { opacity: 1, xPercent: 0, duration: 0.65, ease: 'power4.out' }, lastTime + 0.08);
+            tl.to(links, { yPercent: 0, rotate: 0, duration: 1, ease: 'power4.out', stagger: 0.1 }, lastTime + 0.08 + 0.65 * 0.15);
+            const socStart = lastTime + 0.08 + 0.65 * 0.4;
+            tl.to(socials, { opacity: 1, duration: 0.5, ease: 'power2.out' }, socStart);
+            tl.to(socialLinks, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', stagger: 0.08 }, socStart + 0.04);
+            gsap.to(smTextInner, { yPercent: -50, duration: 0.3, ease: 'power2.out' });
+            gsap.to(smIcon, { rotate: 225, duration: 0.8, ease: 'power4.out' });
+            if (isMobile()) document.querySelector('.sidebar').style.opacity = '0';
+        }
+
+        function closeSM() {
+            smOpen = false;
+            const all = [...smPrelayers, smPanel];
+            gsap.to(all, {
+                xPercent: 100, duration: 0.32, ease: 'power3.in', overwrite: 'auto',
+                onComplete: () => {
+                    const links = smPanel.querySelectorAll('.sm-panel-item');
+                    const socials = smPanel.querySelector('.sm-socials');
+                    const socialLinks = smPanel.querySelectorAll('.sm-socials-link');
+                    gsap.set(links, { yPercent: 120, rotate: 10 });
+                    gsap.set(socials, { opacity: 0 });
+                    gsap.set(socialLinks, { y: 20, opacity: 0 });
+                    gsap.set(smPrelayers, { opacity: 0 });
+                    gsap.set(smPanel, { opacity: 0 });
+                }
+            });
+            gsap.to(smTextInner, { yPercent: 0, duration: 0.3, ease: 'power2.out' });
+            gsap.to(smIcon, { rotate: 0, duration: 0.35, ease: 'power3.inOut' });
+            if (isMobile()) document.querySelector('.sidebar').style.opacity = '1';
+        }
+
+        smPanel.querySelectorAll('.sm-panel-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                closeSM();
+                if (section === 'home') {
+                    closeAllOverlays();
+                    setActiveLink(homeLink);
+                } else if (section === 'works') {
+                    worksLink.click();
+                } else if (section === 'profile') {
+                    profileLink.click();
+                }
+            });
         });
 
         document.querySelector('.menu').addEventListener('click', () => {
